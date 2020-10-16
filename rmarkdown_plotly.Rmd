@@ -1,0 +1,29 @@
+---
+title: "RMarkdown with Plotly"
+author: "Hoe Keng Yew"
+date: "10/17/2020"
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, echo = FALSE, 
+                      message = FALSE, warning = FALSE)
+```
+
+## Visualizing the Data
+
+```{r plot, echo=FALSE}
+library(plotly)
+transmissionMPG <- aggregate(mpg~am+cyl,mtcars , FUN=mean)
+transmissionMPG$am <- ifelse(transmissionMPG$am ==1, "Manual", "Auto")
+colnames(transmissionMPG)[2]<- "Number of Cylinders"
+colnames(transmissionMPG)[3]<- "Average MPG"
+plot_ly(transmissionMPG, x = ~ `Number of Cylinders`, y = ~`Average MPG`,
+        color = ~as.factor(am), 
+        type = "bar", 
+        mode = "markers") %>%
+  layout(title = "Average MPG of cars based on mode of transmission")
+
+```
