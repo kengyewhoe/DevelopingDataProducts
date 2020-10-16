@@ -1,0 +1,53 @@
+---
+title: "RMarkdown and leaflet"
+author: "Keng Yew Hoe"
+date: "10/17/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## My First Leaflet Map
+Create a leaflet map object.
+```{r cars}
+library(leaflet)
+# Displaying the map
+map <- leaflet() %>% 
+  addTiles() %>%
+  addMarkers(lat = 2.9452,lng = 101.8746,popup = "My university, University of Nottingham, Malaysia") %>%
+  addMarkers(lat = 2.9430, lng = 101.8724, popup = "My Hostel, Univillage")
+map
+
+```
+
+# Create a marker with a picture of UNMC logo
+```{r}
+UNMCicon<- makeIcon(
+   iconUrl = "https://universitas21.com/sites/default/files/styles/scale_640_w/public/2018-04/University%20of%20Nottingham.jpg?itok=BA8I2vEi",
+   iconWidth = 45, iconHeight = 45)
+map <- leaflet() %>% 
+addTiles() %>%
+addMarkers(lat = 2.9452,lng = 101.8746, icon = UNMCicon)
+map
+
+```
+
+# Making markers with pop up that shows image of UNMC and link to its homepage
+```{r}
+UNMCPopup <- c("<a href= 'https://nottingham.edu.my/index.aspx' >UNMC <br><img src='https://exchange.nottingham.ac.uk/content/uploads/administration-building-malaysia.jpg' width='210' height='132'  alt='UNM' title='UNMC'></a>")
+map <- leaflet()%>%
+   addTiles() %>%
+   addMarkers(lat = 2.9452,lng = 101.8746, popup = UNMCPopup)
+map
+```
+
+# Combining both
+```{r}
+map <- leaflet()%>%
+  addTiles() %>%
+  addMarkers(lat = 2.9452,lng = 101.8746, popup = UNMCPopup,icon=UNMCicon)
+map
+
+```
